@@ -1,0 +1,130 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Full Stack Web Developer",
+    "subtitle": "Specialized in Automation & AI",
+    "description": "I build modern, scalable web applications using Next.js, MongoDB, and n8n, integrating AI workflows for maximum efficiency.",
+    "viewProjects": "View Projects",
+    "contactMe": "Contact Me",
+    "downloadCV": "Download CV"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "A passionate software engineer obsessed with tech & automation",
+    "bio": "Full Stack Developer specializing in building modern web applications and intelligent automation systems. I work with cutting-edge technologies to deliver innovative solutions that combine high performance with exceptional user experience.",
+    "skills": "Skills",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "databases": "Databases",
+    "automation": "Automation",
+    "ai": "AI Integrations",
+    "experience": "Experience & Education"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "A curated selection of my work",
+    "all": "All",
+    "webApp": "Web Apps",
+    "automationCat": "Automation",
+    "aiCat": "AI",
+    "saas": "SaaS",
+    "viewCode": "Code",
+    "liveDemo": "Live Demo",
+    "viewMore": "View More"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Articles & tutorials on development and automation",
+    "search": "Search articles...",
+    "readMore": "Read More",
+    "readingTime": "min read",
+    "views": "views",
+    "relatedPosts": "Related Posts",
+    "share": "Share",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied!",
+    "noResults": "No results found",
+    "categories": "Categories",
+    "tags": "Tags",
+    "allPosts": "All Posts"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "subtitle": "Let's work together on your next project",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "serviceType": "Service Type",
+    "budgetRange": "Budget Range",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Your message has been sent successfully!",
+    "error": "An error occurred. Please try again.",
+    "services": {
+      "webDev": "Web Development",
+      "automation": "Automation",
+      "api": "API Development",
+      "ai": "AI Solutions",
+      "consulting": "Technical Consulting"
+    },
+    "budgets": {
+      "small": "Under $1,000",
+      "medium": "$1,000 - $5,000",
+      "large": "$5,000 - $15,000",
+      "enterprise": "Over $15,000"
+    }
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "subtitle": "What our clients say about our services"
+  },
+  "automation": {
+    "title": "Automation Solutions",
+    "subtitle": "Smart Automation with n8n",
+    "description": "We provide advanced automation solutions that connect your systems and simplify your workflows"
+  },
+  "footer": {
+    "description": "Full Stack Developer specializing in building modern web applications and intelligent automation systems.",
+    "quickLinks": "Quick Links",
+    "newsletter": "Newsletter",
+    "newsletterDesc": "Subscribe to get the latest articles and updates",
+    "subscribe": "Subscribe",
+    "emailPlaceholder": "Your email",
+    "subscribeSuccess": "Thanks for subscribing!",
+    "rights": "All rights reserved",
+    "social": "Follow Us"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try Again",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "language": "Language"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "posts": "Posts",
+    "messages": "Messages",
+    "projectsAdmin": "Projects",
+    "subscribers": "Subscribers",
+    "newPost": "New Post",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "published": "Published",
+    "draft": "Draft",
+    "total": "Total",
+    "recent": "Recent"
+  }
+}
