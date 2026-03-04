@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Mail, Check, Eye } from 'lucide-react';
+import { Mail, Check } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -25,9 +25,12 @@ export default function AdminContactsPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // In production, this would fetch from an API endpoint
-        setLoading(false);
-        setContacts([]);
+        const fetchContacts = async () => {
+            // In production, this would fetch from an API endpoint
+            setLoading(false);
+            setContacts([]);
+        };
+        fetchContacts();
     }, []);
 
     return (

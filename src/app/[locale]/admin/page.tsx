@@ -25,8 +25,11 @@ export default function AdminDashboard() {
     const [stats, setStats] = useState<Stats>({ posts: 0, contacts: 0, subscribers: 0, views: 0 });
 
     useEffect(() => {
-        // Placeholder stats - in production these would come from API
-        setStats({ posts: 12, contacts: 45, subscribers: 230, views: 1520 });
+        const fetchStats = async () => {
+            // Placeholder stats - in production these would come from API
+            setStats({ posts: 12, contacts: 45, subscribers: 230, views: 1520 });
+        };
+        fetchStats();
     }, []);
 
     const statCards = [

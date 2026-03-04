@@ -24,15 +24,12 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 
-const contactInfo = [
-    { icon: Mail, value: 'contact@example.com', href: 'mailto:contact@example.com' },
-    { icon: Phone, value: '+966 50 000 0000', href: 'tel:+966500000000' },
-    { icon: MapPin, value: 'Saudi Arabia', href: '#' },
-];
+
 
 export default function Contact() {
     const t = useTranslations('contact');
     const locale = useLocale();
+    const isRTL = locale === 'ar';
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -93,7 +90,11 @@ export default function Contact() {
                         viewport={{ once: true }}
                         className="space-y-4"
                     >
-                        {contactInfo.map((info, index) => (
+                        {[
+                            { icon: Mail, value: 'ahmedosmanelhady@gmail.com', href: 'mailto:ahmedosmanelhady@gmail.com' },
+                            { icon: Phone, value: isRTL ? '٠١٠٠١٣١٢٧٤٩ - ٠١١٠١٤٧٦٨٥٤' : '01001312749 - 01101476854', href: 'tel:+201001312749' },
+                            { icon: MapPin, value: isRTL ? 'أسيوط - أبوتيج، مصر' : 'Assyut - Abotig, Egypt', href: 'https://maps.google.com/?q=Abotig,Assiut,Egypt' },
+                        ].map((info, index) => (
                             <a key={index} href={info.href}>
                                 <Card className="hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 group mb-4">
                                     <CardContent className="p-4 flex items-center gap-4">

@@ -5,12 +5,12 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
+import NextImage from 'next/image';
 import {
     Moon,
     Sun,
     Menu,
     Globe,
-    Code2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -46,7 +46,6 @@ export default function Navbar() {
     // Track active section via scroll position on home page
     useEffect(() => {
         if (pathname !== '/') {
-            setActiveSection('');
             return;
         }
 
@@ -91,8 +90,15 @@ export default function Navbar() {
             <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-9 h-9 rounded-lg gradient-btn flex items-center justify-center">
-                        <Code2 className="w-5 h-5 text-white" />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg relative overflow-hidden border-2 border-primary/20 hover:border-primary/50 transition-colors">
+                        <NextImage
+                            src="/profile.jpg"
+                            alt={isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
+                            fill
+                            unoptimized
+                            className="object-cover"
+                            sizes="40px"
+                        />
                     </div>
                     <span className="text-lg font-bold gradient-text">
                         {isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
@@ -163,8 +169,15 @@ export default function Navbar() {
                             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                             <div className="flex flex-col gap-4 mt-8">
                                 <div className="flex items-center gap-2 mb-4">
-                                    <div className="w-9 h-9 rounded-lg gradient-btn flex items-center justify-center">
-                                        <Code2 className="w-5 h-5 text-white" />
+                                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg relative overflow-hidden border-2 border-primary/20">
+                                        <NextImage
+                                            src="/profile.jpg"
+                                            alt={isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
+                                            fill
+                                            unoptimized
+                                            className="object-cover"
+                                            sizes="40px"
+                                        />
                                     </div>
                                     <span className="text-lg font-bold gradient-text">
                                         {isRTL ? 'احمد عثمان' : 'Ahmed Osman'}

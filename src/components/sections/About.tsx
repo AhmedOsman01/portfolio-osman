@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
+import NextImage from 'next/image';
 import {
     Code,
     Server,
@@ -92,10 +93,10 @@ const timeline = [
     {
         year: '2015 - 2019',
         yearAr: '2015 - 2019',
-        title: 'Computer Science Degree',
-        titleAr: 'بكالوريوس علوم حاسب',
-        company: 'University',
-        companyAr: 'الجامعة',
+        title: "Master's Researcher in Arabic and Islamic Studies",
+        titleAr: 'باحث ماجستير فى الدراسات العربية والاسلامية',
+        company: 'Assiut University & Higher Institute for Arabic and Islamic Studies - Cairo',
+        companyAr: 'جامعة أسيوط والمعهد العالى للدراسات العربية والاسلامية - القاهرة',
         type: 'education' as const,
     },
 ];
@@ -171,11 +172,17 @@ export default function About() {
                                         {/* Animated ring */}
                                         <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary via-purple-500 to-pink-500 animate-spin" style={{ animationDuration: '8s' }} />
                                         <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-card flex items-center justify-center overflow-hidden border-4 border-card">
-                                            {/* Replace src below with owner's photo */}
-                                            <div className="w-full h-full bg-gradient-to-br from-primary/30 via-purple-500/30 to-pink-500/30 flex items-center justify-center">
-                                                <span className="text-5xl sm:text-6xl font-bold gradient-text select-none">
-                                                    {isRTL ? 'أ' : 'A'}
-                                                </span>
+                                            {/* Owner's photo */}
+                                            <div className="w-full h-full relative">
+                                                <NextImage
+                                                    src="/profile.jpg"
+                                                    alt={isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
+                                                    fill
+                                                    unoptimized
+                                                    className="object-cover"
+                                                    sizes="(max-width: 768px) 160px, 160px"
+                                                    priority
+                                                />
                                             </div>
                                         </div>
                                         {/* Online indicator */}

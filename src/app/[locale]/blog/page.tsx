@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import BlogCard from '@/components/blog/BlogCard';
 
@@ -36,30 +35,30 @@ export default function BlogPage() {
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
+        const fetchPosts = async () => {
+            setLoading(true);
+            try {
+                const params = new URLSearchParams({
+                    page: page.toString(),
+                    limit: '9',
+                    ...(search && { search }),
+                    ...(activeCategory !== 'all' && { category: activeCategory }),
+                });
+
+                const res = await fetch(`/api/posts?${params}`);
+                const data = await res.json();
+
+                setPosts(data.posts || []);
+                setTotalPages(data.pagination?.totalPages || 1);
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchPosts();
     }, [page, activeCategory, search]);
-
-    const fetchPosts = async () => {
-        setLoading(true);
-        try {
-            const params = new URLSearchParams({
-                page: page.toString(),
-                limit: '9',
-                ...(search && { search }),
-                ...(activeCategory !== 'all' && { category: activeCategory }),
-            });
-
-            const res = await fetch(`/api/posts?${params}`);
-            const data = await res.json();
-
-            setPosts(data.posts || []);
-            setTotalPages(data.pagination?.totalPages || 1);
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
         <div className="pt-24 pb-16">
@@ -105,8 +104,8 @@ export default function BlogPage() {
                                 variant={activeCategory === cat ? 'default' : 'outline'}
                                 size="sm"
                                 className={`rounded-full px-4 h-8 ${activeCategory === cat
-                                        ? 'gradient-btn text-white border-0'
-                                        : 'hover:border-primary/50'
+                                    ? 'gradient-btn text-white border-0'
+                                    : 'hover:border-primary/50'
                                     }`}
                                 onClick={() => {
                                     setActiveCategory(cat);
