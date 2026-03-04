@@ -1,15 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useTheme } from 'next-themes';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     Moon,
     Sun,
     Menu,
-    X,
     Globe,
     Code2,
 } from 'lucide-react';
@@ -23,11 +22,11 @@ import {
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 
 const navLinks = [
-    { href: '/', key: 'home' },
-    { href: '/#about', key: 'about' },
-    { href: '/#projects', key: 'projects' },
-    { href: '/blog', key: 'blog' },
-    { href: '/#contact', key: 'contact' },
+    { href: '/', key: 'home', hash: '' },
+    { href: '/#about', key: 'about', hash: 'about' },
+    { href: '/#projects', key: 'projects', hash: 'projects' },
+    { href: '/blog', key: 'blog', hash: '' },
+    { href: '/#contact', key: 'contact', hash: 'contact' },
 ] as const;
 
 export default function Navbar() {
@@ -37,10 +36,49 @@ export default function Navbar() {
     const router = useRouter();
     const { theme, setTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('');
     const isRTL = locale === 'ar';
 
     const switchLocale = (newLocale: 'ar' | 'en') => {
         router.replace(pathname, { locale: newLocale });
+    };
+
+    // Track active section via scroll position on home page
+    useEffect(() => {
+        if (pathname !== '/') {
+            setActiveSection('');
+            return;
+        }
+
+        const sections = ['contact', 'projects', 'about'];
+
+        const handleScroll = () => {
+            const scrollY = window.scrollY + 100;
+
+            for (const id of sections) {
+                const el = document.getElementById(id);
+                if (el && scrollY >= el.offsetTop) {
+                    setActiveSection(id);
+                    return;
+                }
+            }
+            setActiveSection('');
+        };
+
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [pathname]);
+
+    const isActive = (link: typeof navLinks[number]) => {
+        // Blog page or other sub-pages
+        if (link.href === '/blog' && pathname.startsWith('/blog')) return true;
+        // Home page with hash sections
+        if (pathname === '/') {
+            if (link.hash && activeSection === link.hash) return true;
+            if (!link.hash && link.href === '/' && !activeSection) return true;
+        }
+        return false;
     };
 
     return (
@@ -57,7 +95,7 @@ export default function Navbar() {
                         <Code2 className="w-5 h-5 text-white" />
                     </div>
                     <span className="text-lg font-bold gradient-text">
-                        {isRTL ? 'محمد' : 'Mohammed'}
+                        {isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
                     </span>
                 </Link>
 
@@ -67,9 +105,9 @@ export default function Navbar() {
                         <Link
                             key={link.key}
                             href={link.href}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground ${pathname === link.href
-                                    ? 'bg-accent text-accent-foreground'
-                                    : 'text-muted-foreground'
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground ${isActive(link)
+                                ? 'bg-accent text-accent-foreground'
+                                : 'text-muted-foreground'
                                 }`}
                         >
                             {t(link.key)}
@@ -129,7 +167,7 @@ export default function Navbar() {
                                         <Code2 className="w-5 h-5 text-white" />
                                     </div>
                                     <span className="text-lg font-bold gradient-text">
-                                        {isRTL ? 'محمد' : 'Mohammed'}
+                                        {isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
                                     </span>
                                 </div>
                                 {navLinks.map((link) => (
@@ -137,9 +175,9 @@ export default function Navbar() {
                                         key={link.key}
                                         href={link.href}
                                         onClick={() => setIsOpen(false)}
-                                        className={`px-4 py-3 rounded-lg text-sm font-medium transition-all hover:bg-accent ${pathname === link.href
-                                                ? 'bg-accent text-accent-foreground'
-                                                : 'text-muted-foreground'
+                                        className={`px-4 py-3 rounded-lg text-sm font-medium transition-all hover:bg-accent ${isActive(link)
+                                            ? 'bg-accent text-accent-foreground'
+                                            : 'text-muted-foreground'
                                             }`}
                                     >
                                         {t(link.key)}

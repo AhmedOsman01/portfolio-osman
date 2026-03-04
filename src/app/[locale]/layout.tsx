@@ -28,10 +28,10 @@ export async function generateMetadata({
 
     return {
         title: {
-            template: isArabic ? "%s | محمد - مطور ويب" : "%s | Mohammed - Web Developer",
+            template: isArabic ? "%s | احمد عثمان - مطور ويب" : "%s | Ahmed Osman - Web Developer",
             default: isArabic
-                ? "محمد - مطور تطبيقات ويب متكامل"
-                : "Mohammed - Full Stack Web Developer",
+                ? "احمد عثمان - مطور تطبيقات ويب متكامل"
+                : "Ahmed Osman - Full Stack Web Developer",
         },
         description: isArabic
             ? "مطور تطبيقات ويب متكامل متخصص في Next.js و MongoDB والأتمتة والذكاء الاصطناعي"
@@ -42,7 +42,7 @@ export async function generateMetadata({
         openGraph: {
             type: "website",
             locale: isArabic ? "ar_SA" : "en_US",
-            siteName: isArabic ? "محمد - مطور ويب" : "Mohammed - Web Developer",
+            siteName: isArabic ? "احمد عثمان - مطور ويب" : "Ahmed Osman - Web Developer",
         },
     };
 }

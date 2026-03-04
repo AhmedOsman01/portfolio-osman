@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Layers } from 'lucide-react';
+import { ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -18,7 +18,8 @@ const sampleProjects = [
             ar: 'منصة SaaS متكاملة لإدارة المشاريع والمهام مع لوحة تحكم تفاعلية وتقارير متقدمة',
             en: 'Full-featured SaaS platform for project and task management with interactive dashboard and advanced reporting',
         },
-        image: '/projects/project1.jpg',
+        icon: '📊',
+        gradient: 'from-blue-600/40 via-indigo-600/30 to-purple-700/40',
         techStack: ['Next.js', 'MongoDB', 'TypeScript', 'Tailwind CSS', 'Socket.IO'],
         githubUrl: 'https://github.com',
         liveUrl: 'https://example.com',
@@ -31,7 +32,8 @@ const sampleProjects = [
             ar: 'نظام أتمتة متكامل يربط بين CRM والبريد الإلكتروني ومنصات التواصل الاجتماعي عبر n8n',
             en: 'Comprehensive automation system connecting CRM, email, and social media platforms via n8n',
         },
-        image: '/projects/project2.jpg',
+        icon: '⚙️',
+        gradient: 'from-emerald-600/40 via-teal-600/30 to-cyan-700/40',
         techStack: ['n8n', 'Node.js', 'MongoDB', 'REST APIs', 'Webhooks'],
         githubUrl: 'https://github.com',
         liveUrl: 'https://example.com',
@@ -44,7 +46,8 @@ const sampleProjects = [
             ar: 'روبوت محادثة ذكي يستخدم OpenAI API مع قاعدة معرفية مخصصة ونظام RAG للإجابات الدقيقة',
             en: 'Intelligent chatbot using OpenAI API with custom knowledge base and RAG system for accurate responses',
         },
-        image: '/projects/project3.jpg',
+        icon: '🤖',
+        gradient: 'from-pink-600/40 via-rose-600/30 to-purple-700/40',
         techStack: ['OpenAI', 'LangChain', 'Next.js', 'Pinecone', 'TypeScript'],
         githubUrl: 'https://github.com',
         liveUrl: 'https://example.com',
@@ -57,7 +60,8 @@ const sampleProjects = [
             ar: 'متجر إلكتروني كامل مع نظام دفع متكامل وإدارة مخزون وأتمتة الشحن',
             en: 'Full e-commerce store with integrated payment system, inventory management, and shipping automation',
         },
-        image: '/projects/project4.jpg',
+        icon: '🛒',
+        gradient: 'from-orange-600/40 via-amber-600/30 to-yellow-700/40',
         techStack: ['Next.js', 'MongoDB', 'Stripe', 'Tailwind CSS', 'Redis'],
         githubUrl: 'https://github.com',
         liveUrl: 'https://example.com',
@@ -70,7 +74,8 @@ const sampleProjects = [
             ar: 'لوحة تحكم تفاعلية لتحليل البيانات وعرض التقارير مع رسوم بيانية متقدمة',
             en: 'Interactive dashboard for data analysis and reporting with advanced charts and visualizations',
         },
-        image: '/projects/project5.jpg',
+        icon: '📈',
+        gradient: 'from-cyan-600/40 via-sky-600/30 to-blue-700/40',
         techStack: ['React', 'D3.js', 'Node.js', 'PostgreSQL', 'GraphQL'],
         githubUrl: 'https://github.com',
         liveUrl: 'https://example.com',
@@ -83,7 +88,8 @@ const sampleProjects = [
             ar: 'نظام CMS ذكي يستخدم الذكاء الاصطناعي لتوليد المحتوى وتحسين SEO تلقائياً',
             en: 'Smart CMS using AI for content generation and automatic SEO optimization',
         },
-        image: '/projects/project6.jpg',
+        icon: '✨',
+        gradient: 'from-violet-600/40 via-purple-600/30 to-fuchsia-700/40',
         techStack: ['Next.js', 'OpenAI', 'MongoDB', 'n8n', 'TypeScript'],
         githubUrl: 'https://github.com',
         liveUrl: 'https://example.com',
@@ -140,8 +146,8 @@ export default function Projects() {
                             size="sm"
                             onClick={() => setActiveCategory(cat.key)}
                             className={`rounded-full px-5 h-9 transition-all ${activeCategory === cat.key
-                                    ? 'gradient-btn text-white border-0'
-                                    : 'hover:border-primary/50'
+                                ? 'gradient-btn text-white border-0'
+                                : 'hover:border-primary/50'
                                 }`}
                         >
                             {t(cat.labelKey)}
@@ -162,10 +168,17 @@ export default function Projects() {
                                 transition={{ duration: 0.3 }}
                             >
                                 <Card className="overflow-hidden group hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 h-full flex flex-col">
-                                    {/* Image placeholder */}
-                                    <div className="relative h-48 bg-gradient-to-br from-primary/20 to-purple-500/20 overflow-hidden">
-                                        <div className="absolute inset-0 flex items-center justify-center bg-secondary/50">
-                                            <Layers className="w-12 h-12 text-muted-foreground/30" />
+                                    {/* Image — unique gradient + icon */}
+                                    <div className={`relative h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+                                        {/* Grid pattern overlay */}
+                                        <div className="absolute inset-0 opacity-20" style={{
+                                            backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)',
+                                            backgroundSize: '20px 20px',
+                                        }} />
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-6xl group-hover:scale-125 transition-transform duration-500 drop-shadow-lg select-none">
+                                                {project.icon}
+                                            </span>
                                         </div>
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                             <div className="flex gap-3">

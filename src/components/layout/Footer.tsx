@@ -79,7 +79,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="space-y-4">
                         <h3 className="text-xl font-bold gradient-text">
-                            {locale === 'ar' ? 'محمد' : 'Mohammed'}
+                            {locale === 'ar' ? 'احمد عثمان' : 'Ahmed Osman'}
                         </h3>
                         <p className="text-muted-foreground text-sm leading-relaxed">
                             {t('footer.description')}
@@ -152,7 +152,7 @@ export default function Footer() {
                 {/* Bottom */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-muted-foreground flex items-center gap-1">
-                        © {new Date().getFullYear()} Mohammed.{' '}
+                        © {new Date().getFullYear()} Ahmed Osman.{' '}
                         {t('footer.rights')}.{' '}
                         <span className="inline-flex items-center gap-1">
                             Made with <Heart className="w-3 h-3 text-red-500 fill-red-500" />
