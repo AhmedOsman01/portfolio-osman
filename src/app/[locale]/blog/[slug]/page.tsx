@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Eye, ArrowRight, ArrowLeft } from 'lucide-react';
+import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -39,6 +40,23 @@ export default function BlogPostPage() {
     const [post, setPost] = useState<Post | null>(null);
     const [related, setRelated] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
+    const [readingProgress, setReadingProgress] = useState(0);
+    const articleRef = useRef<HTMLElement>(null);
+
+    // Track reading progress
+    useEffect(() => {
+        const updateProgress = () => {
+            const el = articleRef.current;
+            if (!el) return;
+            const { top, height } = el.getBoundingClientRect();
+            const winH = window.innerHeight;
+            const scrolled = Math.max(0, -top);
+            const total = height - winH;
+            setReadingProgress(total > 0 ? Math.min(100, (scrolled / total) * 100) : 0);
+        };
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        return () => window.removeEventListener('scroll', updateProgress);
+    }, []);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -91,8 +109,16 @@ export default function BlogPostPage() {
 
     return (
         <div className="pt-24 pb-16">
+            {/* Reading Progress Bar */}
+            <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-border">
+                <div
+                    className="h-full gradient-btn transition-all duration-75 ease-linear"
+                    style={{ width: `${readingProgress}%` }}
+                />
+            </div>
+
             <div className="container mx-auto px-4">
-                <article className="max-w-3xl mx-auto">
+                <article ref={articleRef} className="max-w-3xl mx-auto">
                     {/* Back link */}
                     <motion.div
                         initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
@@ -155,6 +181,27 @@ export default function BlogPostPage() {
                     </motion.div>
 
                     <Separator className="mb-8" />
+
+                    {/* Cover Image */}
+                    {post.coverImage && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.15, duration: 0.5 }}
+                            className="relative w-full h-72 sm:h-96 rounded-2xl overflow-hidden mb-10 shadow-2xl shadow-primary/10"
+                        >
+                            <Image
+                                src={post.coverImage}
+                                alt={isRTL ? post.title.ar : post.title.en}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 768px"
+                                priority
+                            />
+                            {/* Subtle gradient overlay at the bottom */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+                        </motion.div>
+                    )}
 
                     {/* Content */}
                     <motion.div

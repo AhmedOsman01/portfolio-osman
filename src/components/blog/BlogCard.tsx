@@ -3,6 +3,7 @@
 import { useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Eye } from 'lucide-react';
+import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from '@/i18n/routing';
@@ -44,9 +45,19 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
                 {/* Image */}
                 <Link href={`/blog/${post.slug}`}>
                     <div className="relative h-48 bg-gradient-to-br from-primary/20 to-purple-500/20 overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-4xl">📝</span>
-                        </div>
+                        {post.coverImage ? (
+                            <Image
+                                src={post.coverImage}
+                                alt={isRTL ? post.title.ar : post.title.en}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="text-4xl">📝</span>
+                            </div>
+                        )}
                         <div className="absolute top-3 start-3">
                             <Badge className="gradient-btn text-white border-0 text-xs">
                                 {post.category}

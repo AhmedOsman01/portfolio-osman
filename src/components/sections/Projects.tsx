@@ -220,6 +220,28 @@ export default function Projects() {
                     </AnimatePresence>
                 </motion.div>
             </div>
+
+            {/* See All Projects CTA */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="flex justify-center mt-12"
+            >
+                <a href={`/${locale}/projects`}>
+                    <Button
+                        size="lg"
+                        className="gradient-btn text-white border-0 gap-2 px-8 h-12 text-base font-semibold shadow-lg shadow-primary/20 hover:scale-105 transition-transform"
+                    >
+                        {isRTL ? 'عرض جميع المشاريع' : 'See All Projects'}
+                        {isRTL
+                            ? <span className="text-lg">←</span>
+                            : <span className="text-lg">→</span>
+                        }
+                    </Button>
+                </a>
+            </motion.div>
         </section>
     );
 }
