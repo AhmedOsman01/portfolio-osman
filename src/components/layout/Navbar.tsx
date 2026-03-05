@@ -100,7 +100,7 @@ export default function Navbar() {
                             sizes="40px"
                         />
                     </div>
-                    <span className="text-lg font-bold gradient-text">
+                    <span className="text-xl font-bold gradient-text">
                         {isRTL ? 'احمد عثمان' : 'Ahmed Osman'}
                     </span>
                 </Link>

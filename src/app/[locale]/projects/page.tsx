@@ -3,19 +3,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useLocale } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ExternalLink, Github, ChevronLeft, ChevronRight, Star, X } from 'lucide-react';
+import { Search, ExternalLink, Github, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogDescription,
-} from '@/components/ui/dialog';
+import { usePlaceholderAlert, PlaceholderAlertDialog, isPlaceholderUrl } from '@/hooks/usePlaceholderAlert';
 import Image from 'next/image';
 
 interface Project {
@@ -84,23 +78,7 @@ export default function ProjectsPage() {
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const [activeCategory, setActiveCategory] = useState('all');
     const [currentPage, setCurrentPage] = useState(1);
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertType, setAlertType] = useState<'live' | 'code'>('live');
-
-    const isPlaceholder = (url: string) =>
-        !url ||
-        url === '#' ||
-        url.includes('example.com') ||
-        url.includes('github.com/example');
-
-    const handleLink = (e: React.MouseEvent<HTMLElement>, url: string, type: 'live' | 'code') => {
-        if (isPlaceholder(url)) {
-            e.preventDefault();
-            setAlertType(type);
-            setShowAlert(true);
-        }
-        // If real URL, the anchor proceeds normally
-    };
+    const { open, setOpen, type, handleLink } = usePlaceholderAlert();
 
     // Debounce search
     useEffect(() => {
@@ -145,38 +123,8 @@ export default function ProjectsPage() {
     return (
         <div className="min-h-screen pt-24 pb-20">
 
-            {/* Not-available Alert Dialog */}
-            <Dialog open={showAlert} onOpenChange={setShowAlert}>
-                <DialogContent className="max-w-sm text-center">
-                    <button
-                        onClick={() => setShowAlert(false)}
-                        className="absolute top-3 end-3 text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                        <X className="w-4 h-4" />
-                    </button>
-                    <DialogHeader className="items-center">
-                        <div className="text-5xl mb-3">🚧</div>
-                        <DialogTitle className="text-xl font-bold">
-                            {isRTL ? 'عذراً، الصفحة غير متاحة بعد' : 'Coming Soon!'}
-                        </DialogTitle>
-                        <DialogDescription className="text-sm text-muted-foreground leading-relaxed mt-2">
-                            {alertType === 'live'
-                                ? (isRTL
-                                    ? 'نأسف، هذا المشروع لا يزال قيد التطوير ولم يُنشر بعد. 🙏\nشكراً لصبرك — سيكون متاحاً قريباً!'
-                                    : "We're sorry, this project is still under development and hasn't been deployed yet. 🙏\nThank you for your patience — it'll be live soon!")
-                                : (isRTL
-                                    ? 'نأسف، هذا المستودع خاص أو لم يُنشر بعد. 🙏\nيمكنك التواصل معنا لمزيد من المعلومات.'
-                                    : "We're sorry, this repository is private or not published yet. 🙏\nFeel free to contact us for more information.")}
-                        </DialogDescription>
-                    </DialogHeader>
-                    <Button
-                        onClick={() => setShowAlert(false)}
-                        className="gradient-btn text-white border-0 mt-2 w-full"
-                    >
-                        {isRTL ? 'حسناً، شكراً!' : 'Got it, thanks!'}
-                    </Button>
-                </DialogContent>
-            </Dialog>
+            {/* Placeholder Alert Dialog */}
+            <PlaceholderAlertDialog open={open} onClose={() => setOpen(false)} type={type} />
 
             <div className="container mx-auto px-4 max-w-7xl">
 
@@ -305,7 +253,7 @@ export default function ProjectsPage() {
                                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
                                                 {project.githubUrl && (
                                                     <a
-                                                        href={isPlaceholder(project.githubUrl) ? '#' : project.githubUrl}
+                                                        href={isPlaceholderUrl(project.githubUrl) ? '#' : project.githubUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => handleLink(e, project.githubUrl, 'code')}
@@ -317,7 +265,7 @@ export default function ProjectsPage() {
                                                 )}
                                                 {project.liveUrl && (
                                                     <a
-                                                        href={isPlaceholder(project.liveUrl) ? '#' : project.liveUrl}
+                                                        href={isPlaceholderUrl(project.liveUrl) ? '#' : project.liveUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => handleLink(e, project.liveUrl, 'live')}
@@ -370,7 +318,7 @@ export default function ProjectsPage() {
                                             <div className="flex gap-2 pt-2">
                                                 {project.liveUrl && (
                                                     <a
-                                                        href={isPlaceholder(project.liveUrl) ? '#' : project.liveUrl}
+                                                        href={isPlaceholderUrl(project.liveUrl) ? '#' : project.liveUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => handleLink(e, project.liveUrl, 'live')}
@@ -384,7 +332,7 @@ export default function ProjectsPage() {
                                                 )}
                                                 {project.githubUrl && (
                                                     <a
-                                                        href={isPlaceholder(project.githubUrl) ? '#' : project.githubUrl}
+                                                        href={isPlaceholderUrl(project.githubUrl) ? '#' : project.githubUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => handleLink(e, project.githubUrl, 'code')}

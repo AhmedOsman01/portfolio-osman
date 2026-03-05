@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { usePlaceholderAlert, PlaceholderAlertDialog, isPlaceholderUrl } from '@/hooks/usePlaceholderAlert';
 
 type Category = 'all' | 'web-app' | 'automation' | 'ai' | 'saas';
 
@@ -105,6 +106,7 @@ export default function Projects() {
     const locale = useLocale();
     const isRTL = locale === 'ar';
     const [activeCategory, setActiveCategory] = useState<Category>('all');
+    const { open, setOpen, type, handleLink } = usePlaceholderAlert();
 
     const filteredProjects =
         activeCategory === 'all'
@@ -113,6 +115,8 @@ export default function Projects() {
 
     return (
         <section id="projects" className="py-24 bg-secondary/30">
+            {/* Placeholder Alert Dialog */}
+            <PlaceholderAlertDialog open={open} onClose={() => setOpen(false)} type={type} />
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <motion.div
@@ -176,17 +180,19 @@ export default function Projects() {
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                             <div className="flex gap-3">
                                                 <a
-                                                    href={project.githubUrl}
+                                                    href={isPlaceholderUrl(project.githubUrl) ? '#' : project.githubUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
+                                                    onClick={(e) => handleLink(e, project.githubUrl, 'code')}
                                                     className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white hover:bg-white/30 transition-colors"
                                                 >
                                                     <Github className="w-4 h-4" />
                                                 </a>
                                                 <a
-                                                    href={project.liveUrl}
+                                                    href={isPlaceholderUrl(project.liveUrl) ? '#' : project.liveUrl}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
+                                                    onClick={(e) => handleLink(e, project.liveUrl, 'live')}
                                                     className="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white hover:bg-white/30 transition-colors"
                                                 >
                                                     <ExternalLink className="w-4 h-4" />
